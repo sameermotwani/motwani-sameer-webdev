@@ -3,5 +3,64 @@ input.form-control {
 }
 
 body {
-    padding-top: 36px;
+    padding-top: 60px;
+    padding-bottom: 50px;
+}
+
+.margin-bottom
+{
+	margin-bottom: 5px;
+}
+
+.nav-bottom
+{
+	margin-bottom: 300px;
+	
+}
+
+.pad-top
+{
+padding-top: 70px;
+}
+
+.pad-bottom
+{
+padding-bottom: 5px;
+}
+
+.navbar.navbar-default.navbar-fixed-top {
+    background: #337ab7;
+}
+
+.navbar-default .navbar-link {
+    color: white;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar.navbar-default.navbar-fixed-bottom {
+    background: #337ab7;
+}
+
+.navbar.navbar-info.navbar-fixed-top {
+    background: white;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.table.borderless td, .borderless th {
+    border: none;
+}
+
+
+span.glyphicon.glyphicon-plus {
+    color: white;
+}
+
+span.glyphicon.glyphicon-menu-left{
+    color: white;
 }
