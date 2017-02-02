@@ -7,27 +7,6 @@ body {
     padding-bottom: 50px;
 }
 
-.margin-bottom
-{
-	margin-bottom: 5px;
-}
-
-.nav-bottom
-{
-	margin-bottom: 300px;
-	
-}
-
-.pad-top
-{
-padding-top: 70px;
-}
-
-.pad-bottom
-{
-padding-bottom: 5px;
-}
-
 .navbar.navbar-default.navbar-fixed-top {
     background: #337ab7;
 }
@@ -51,11 +30,6 @@ padding-bottom: 5px;
 .navbar-default .navbar-brand {
     color: white;
 }
-
-.table.borderless td, .borderless th {
-    border: none;
-}
-
 
 span.glyphicon.glyphicon-plus {
     color: white;
