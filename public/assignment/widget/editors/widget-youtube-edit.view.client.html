@@ -1,0 +1,22 @@
+<div class="container-fluid">
+      <form class="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" ng-model="model.widget.name" id="vidname" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="text">Text</label>
+            <input type="text" class="form-control" ng-model="model.widget.text" id="vidtext" placeholder="Description">
+        </div>
+        <div class="form-group">
+            <label for="url">URL</label>
+            <input type="text" class="form-control" ng-model="model.widget.url" id="vidurl" placeholder="https://www.youtube.com/watch?v=cOZk6pxDk9I">
+        </div>
+        <div class="form-group">
+            <label for="width">Width</label>
+            <input type="text" class="form-control" ng-model="model.widget.width" id="vidwidth" placeholder="100%">
+        </div>
+    </form>
+    <a class="btn btn-danger btn-block"
+       ng-click="model.deleteWidget()">Delete</a>
+</div>

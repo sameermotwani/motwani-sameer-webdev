@@ -1,0 +1,67 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+        <div class="navbar-header">
+		<p class="navbar-text pull-left">
+            <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="navbar-link">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+		</p>
+			
+    
+            <a class="navbar-brand" href="#">
+                Choose Widget
+            </a>
+        </div>
+            
+    </div>
+</nav>
+	
+
+
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a ng-click="model.createWidget('HEADER')")>Header</a>
+        </li>
+        <li class="list-group-item">
+            <a href="widget-chooser.html">Label</a>
+		</li>
+        <li class="list-group-item">
+            <a href="widget-chooser.html">HTML</a>
+        </li>
+        <li class="list-group-item">
+            <a href="widget-chooser.html">Text Input</a>
+        </li>
+		<li class="list-group-item">
+            <a href="widget-chooser.html">Link</a>
+        </li>
+		<li class="list-group-item">
+            <a href="widget-chooser.html">Button</a>
+        </li>
+		<li class="list-group-item">
+            <a ng-click="model.createWidget('IMAGE')">Image</a>
+        </li>
+		<li class="list-group-item">
+            <a ng-click="model.createWidget('YOUTUBE')">YouTube</a>
+        </li>
+		<li class="list-group-item">
+            <a href="widget-chooser.html">Data Table</a>
+        </li>
+		<li class="list-group-item">
+            <a href="widget-chooser.html">Repeater</a>
+        </li>
+    </ul>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-header pull-right">
+            <p class="col-xs-12 navbar-text">
+                <a ng-href="#/user/{{model.userId}}" class="navbar-link">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</nav>
