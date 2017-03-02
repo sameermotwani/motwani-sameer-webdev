@@ -7,7 +7,7 @@
 
 
             <p class="navbar-text pull-right">
-                <a class="navbar-link" ng-click="model.updateProfile(model.user)">
+                <a class="navbar-link" ng-click="model.updateUser(model.user)">
                     <span class="glyphicon glyphicon-ok">
                     </span>
                 </a>
@@ -18,13 +18,8 @@
 
 
 <div class="container-fluid">
-    <div ng-switch="model.message.type">
-        <div class="alert alert-danger" ng-switch-when="ERROR">
-            {{model.message.content}}
-        </div>
-        <div class="alert alert-success" ng-switch-when="SUCCESS">
-            {{model.message.content}}
-        </div>
+    <div class="alert alert-success" ng-show="model.message">
+        {{model.message}}
     </div>
     <label for="username">Username</label>
     <input ng-model="model.user.username"

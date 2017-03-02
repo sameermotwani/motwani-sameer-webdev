@@ -10,7 +10,11 @@
         vm.websiteId = $routeParams["wid"];
 
         function init() {
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+            PageService
+                .findPagesByWebsiteId(vm.websiteId)
+                .success(function (response) {
+                    vm.pages = response;
+                });
         }
 
         init();
@@ -25,14 +29,23 @@
 
         function init() {
             //load pages for landscape showing list
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
+            PageService
+                .findPagesByWebsiteId(vm.websiteId)
+                .success(function (response) {
+                    vm.pages = response;
+                });
         }
 
         init();
 
-        function createPage(page) {
-            PageService.createPage(vm.websiteId, page);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+        function createPage(newPage) {
+            PageService
+                .createPage(vm.websiteId,newPage)
+                .success(function (response) {
+                    if(response){
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                    }
+                });
         }
     }
 
@@ -46,20 +59,41 @@
 
         function init() {
             //load pages for landscape showing list
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
-            vm.page = PageService.findPageById(vm.pageId);
+            PageService
+                .findPageById(vm.pageId)
+                .success(function (response) {
+                    vm.page = response;
+                    if(vm.page){
+                        PageService
+                            .findPagesByWebsiteId(vm.websiteId)
+                            .success(function (response) {
+                                vm.pages = response;
+                            });
+                    }
+                });
         }
 
         init();
 
         function updatePage(page) {
-            PageService.updatePage(vm.pageId, page);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+            PageService
+                .updatePage(vm.pageId, page)
+                .success(function (response) {
+                    var page = response;
+                    if(page){
+                        $location.url("user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                    }
+                });
         }
 
         function deletePage() {
-            PageService.deletePage(vm.pageId);
-            $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+            PageService
+                .deletePage(vm.pageId)
+                .success(function (response) {
+                    if(response){
+                        $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
+                    }
+                });
         }
 
     }

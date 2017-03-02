@@ -28,7 +28,8 @@
 
 <div class="container-fluid">
 
-   <div class="col-xs-12">
+   <div class="col-xs-12 widget-list1">
+    <div wbdv-sortable="" update-order="model.updateOrder(startIndex,endIndex)">
        <div ng-repeat="widget in model.widgets">
            <div class="jga-toolbar">
                <a ng-href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
@@ -53,11 +54,12 @@
            </div>
 
        </div>
-
+        </div>
    </div>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
+
         <div class="navbar-header pull-right">
             <p class="col-xs-12 navbar-text">
                 <a ng-href="#/user/{{model.userId}}" class="navbar-link">

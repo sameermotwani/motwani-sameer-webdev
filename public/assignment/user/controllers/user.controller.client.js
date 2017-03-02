@@ -14,12 +14,15 @@
         init();
 
         function login(user) {
-            user = UserService.findUserByCredentials(user.username, user.password);
-            if (user) {
-                $location.url("/user/" + user._id);
-            } else {
-                vm.error="User not found";
-            }
+            var promise = UserService
+                .findUserByCredentials(user.username, user.password);
+            promise.success(function(user){
+                if(user) {
+                    $location.url("/user/"+user._id);
+                } else {
+                    vm.error = "User not found";
+                }
+            });
         }
     }
 
@@ -35,39 +38,47 @@
         function register(user) {
             if (user.password != user.verifypwd) {
                 $window.alert("two input password is not the same, Please check!");
-            } else {
-                var newUser = {_id:"", username:"", password:""};
-                newUser.username = user.username;
-                newUser.password = user.password;
-                newUser = UserService.createUser(newUser);
-                if (newUser) {
-                    $location.url("/user/"+newUser._id);
-                }
             }
+            UserService
+                .findUserByUsername(user.username)
+                .success(function(user){
+                    vm.message = "Username taken, please try another username";
+                })
+                .error(function (err) {
+                    UserService
+                        .createUser(user)
+                        .success(function (newuser) {
+                            vm.message = "Username updated succesfully"
+                            $location.url("/user/"+newuser._id);
+                        });
+                });
         }
     }
 
     function ProfileController($routeParams, UserService) {
         var vm = this;
-        vm.updateProfile = updateProfile;
+        vm.updateUser = updateUser;
         vm.userId = $routeParams["uid"];
-
+        console.log()
         function init() {
-            vm.user = UserService.findUserById(vm.userId);
-            console.log(vm.user);
+            var promise = UserService.findUserById(vm.userId);
+            promise.success(function (user) {
+                vm.user = user;
+            });
         }
 
         init();
 
-        function updateProfile(user) {
-            var newUser = UserService.updateUser(vm.userId, user);
-            console.log(newUser);
-            if (newUser) {
-                vm.message = {type: "SUCCESS", content:"Profile updated!"};
-                init();
-            } else {
-                vm.message = {type: "ERROR", content:"Update profile failed!"};
-            }
+        function updateUser(newUser) {
+            UserService
+                .updateUser(vm.userId, newUser)
+                .success(function (user) {
+                    if(user != null) {
+                        vm.message = "User Successfully Updated!"
+                    } else {
+                        vm.error = "Unable to update user";
+                    }
+                });
         }
     }
 })();

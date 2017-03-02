@@ -2,6 +2,10 @@
    <div class="container-fluid">
     <h1>Register</h1>
 
+    <div class="alert alert-success" ng-show="model.message">
+     {{model.message}}
+    </div>
+
     <input ng-model="user.username"
            id="username"
            class="form-control"

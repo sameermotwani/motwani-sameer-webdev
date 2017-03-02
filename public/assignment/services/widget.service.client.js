@@ -2,80 +2,39 @@
     angular
         .module("WebAppMaker")
         .factory("WidgetService", WidgetService);
-    function WidgetService() {
-        var widgets = [
-            {"_id": 123, "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
-            {"_id": 234, "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-            {
-                "_id": 345, "widgetType": "IMAGE", "pageId": "321", "width": "100%",
-                "url": "http://lorempixel.com/400/200/"
-            },
-            {"_id": 456, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-            {"_id": 567, "widgetType": "HEADER", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-            {
-                "_id": 678, "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
-                "url": "https://www.youtube.com/embed/AM2Ivdi9c4E"
-            },
-            {"_id": 789, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
-        ];
+    function WidgetService($http) {
         var api = {
             "createWidget": createWidget,
             "findWidgetsByPageId": findWidgetsByPageId,
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
-            "deleteWidget": deleteWidget
+            "deleteWidget": deleteWidget,
+            "updateWidgetsOrder": updateWidgetsOrder
         };
         return api;
 
         function createWidget(pageId, widget) {
-            widget._id = widgets[widgets.length - 1]._id + 1;
-            widget.pageId = pageId;
-            widgets.push(widget);
-            return widget;
+            return $http.post("/api/page/"+pageId+"/widget",widget);
         }
 
         function findWidgetsByPageId(pageId) {
-            PageWidgets = [];
-            for (var i = 0; i < widgets.length; i++) {
-                if (widgets[i].pageId == pageId) {
-                    PageWidgets.push(widgets[i]);
-                }
-            }
-            return PageWidgets;
+            return $http.get("/api/page/"+pageId+"/widget");
         }
 
         function findWidgetById(widgetId) {
-            var left = 0;
-            var right = widgets.length;
-            while (left <= right) {
-                var mid = parseInt((left + right) / 2);
-                if (widgets[mid]._id == widgetId) {
-                    return widgets[mid];
-                } else if (widgets[mid]._id > widgetId) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            return null;
+            return $http.get("/api/widget/"+widgetId);
         }
 
         function updateWidget(widgetId, widget) {
-            for (var i = 0; i < widgets.length; i++) {
-                var widgeta = widgets[i];
-                if (widgeta._id == widgetId) {
-                    widgets[i] = widget;
-                    return angular.copy(widgeta);
-                }
-            }
+            return $http.put("/api/widget/"+widgetId,widget);
         }
 
         function deleteWidget(widgetId) {
-            for (var i = 0; i < widgets.length; i++) {
-                if (widgets[i]._id == widgetId) {
-                    widgets.splice(i, 1);
-                }
-            }
+            return $http.delete("/api/widget/"+widgetId);
+        }
+
+        function updateWidgetsOrder(pageId,startIndex,endIndex){
+            return $http.put('/api/page/' + pageId + '/widget?startIndex=' + startIndex + '&endIndex=' + endIndex);
         }
     }
 })();
