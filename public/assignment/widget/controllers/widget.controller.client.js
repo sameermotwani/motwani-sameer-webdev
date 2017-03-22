@@ -56,7 +56,9 @@
         }
 
         function selectPhoto(photo) {
-            vm.widget.url = photo.url;
+            var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
+            url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
+            vm.widget.url = url;
             WidgetService
                 .updateWidget(vm.widgetId, vm.widget)
                 .success(function (status) {
