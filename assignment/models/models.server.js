@@ -9,7 +9,7 @@ module.exports = function () {
             process.env.MLAB_APP_NAME;
 	console.log(connectionString);
 	mongoose.connect(connectionString);
-    // }
+    }
     console.log(connectionString);
 
 
