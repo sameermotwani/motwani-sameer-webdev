@@ -12,10 +12,10 @@ if(process.env.MLAB_USERNAME) {
 	process.env.MLAB_PORT + '/' +
 	process.env.MLAB_APP_NAME;
 }
-    console.log(connectionString);
+   // console.log(connectionString);
 
     var mongoose = require("mongoose");  // npm install mongoose --save
-    mongoose.connect(connectionString);
+   // mongoose.connect(connectionString);
 
     var TestSchema = mongoose.Schema({
         message: String

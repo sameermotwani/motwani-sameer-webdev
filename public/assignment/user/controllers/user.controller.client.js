@@ -14,15 +14,21 @@
         init();
 
         function login(user) {
-            var promise = UserService
-                .findUserByCredentials(user.username, user.password);
-            promise.success(function(user){
+            UserService
+                .findUserByCredentials(user.username, user.password)
+                .success(function(user){
                 if(user) {
+                    console.log("here");
                     $location.url("/user/"+user._id);
                 } else {
+                    console.log("here2");
                     vm.error = "User not found";
                 }
-            });
+            })
+                .error(function(err){
+                    // console.log("In .error")
+                    vm.error = "User not found";
+                });
         }
     }
 
@@ -45,10 +51,11 @@
                     vm.message = "Username taken, please try another username";
                 })
                 .error(function (err) {
+                    console.log("Test");
                     UserService
                         .createUser(user)
                         .success(function (newuser) {
-                            vm.message = "Username updated succesfully"
+                            vm.message = "Username created succesfully"
                             $location.url("/user/"+newuser._id);
                         });
                 });

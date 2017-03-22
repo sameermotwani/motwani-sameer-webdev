@@ -12,9 +12,13 @@
         function init() {
             WebsiteService
                 .findWebsitesByUser(vm.userId)
-                .success(function (response) {
-                    vm.websites = response;
-                });
+                .success(function (websites) {
+                    vm.websites = websites;
+                })
+                .error(function (err) {
+                    console.log("Error fetching websites");
+                    console.log(err);
+                })
         }
 
         init();

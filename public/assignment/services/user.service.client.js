@@ -16,6 +16,7 @@
         return api;
 
         function createUser(user) {
+            console.log("In Create");
             console.log(user);
             return $http.post("/api/user/", user);
 

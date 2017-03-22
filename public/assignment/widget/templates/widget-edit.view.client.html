@@ -25,8 +25,8 @@
 </nav>
 
 
-
 <div class="container-fluid">
+
     <div ng-switch="model.widget.widgetType">
         <div ng-switch-when="HEADER">
             <ng-include src="'widget/editors/widget-heading-edit.view.client.html'"></ng-include>
@@ -36,6 +36,12 @@
         </div>
         <div ng-switch-when="YOUTUBE">
             <ng-include src="'widget/editors/widget-youtube-edit.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="HTML">
+            <ng-include src="'widget/editors/widget-html-edit.view.client.html'"></ng-include>
+        </div>
+        <div ng-switch-when="TEXT">
+            <ng-include src="'widget/editors/widget-text-edit.view.client.html'"></ng-include>
         </div>
     </div>
 </div>
