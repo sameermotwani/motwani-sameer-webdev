@@ -1,5 +1,5 @@
 module.exports = function () {
-
+var mongoose = require("mongoose");
     var connectionString = 'mongodb://127.0.0.1:27017/webAppMaker';
      if(process.env.MLAB_USERNAME) {
          connectionString = process.env.MLAB_USERNAME + ":" +
@@ -13,7 +13,7 @@ module.exports = function () {
     console.log(connectionString);
 
 
-    var mongoose = require("mongoose");
+    
     //mongoose.Promise = global.Promise;
 
    // var options = { promiseLibrary: require('bluebird') };
