@@ -59,7 +59,9 @@ module.exports = function (app,models) {
             .findUserByUsername(username)
             .then(
                 function (user) {
-                    if (user == []) {
+                    console.log("user");
+                    console.log(user);
+                    if (user == [] || user == null) {
                         console.log(user);
                         res.status(500).send("User not found");
                     }
