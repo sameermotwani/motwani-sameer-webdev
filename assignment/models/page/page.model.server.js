@@ -11,6 +11,7 @@ module.exports = function () {
         findPageById: findPageById,
         updatePage: updatePage,
         deletePage: deletePage,
+        addWidgetForPage:addWidgetForPage
 
     };
     return api;
@@ -19,6 +20,15 @@ module.exports = function () {
     function createPage(websiteId, page) {
         page._website = websiteId;
         return Page.create(page);
+    }
+
+
+    function addWidgetForPage(pageId, newWidget) {
+        return Page
+            .findById(userId, function (err, page) {
+                page.widgets.push(newWidget);
+                page.save();
+            });
     }
 
     // Retrieves all page instances for user whose  _id is websiteId

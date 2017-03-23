@@ -10,7 +10,12 @@ var mongoose = require("mongoose");
 	console.log(connectionString);
 	mongoose.connect(connectionString);
     }
-    console.log(connectionString);
+    else
+     {
+         console.log(connectionString);
+         mongoose.connect(connectionString);
+     }
+
 
 
     

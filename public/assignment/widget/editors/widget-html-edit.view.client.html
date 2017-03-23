@@ -1,9 +1,11 @@
+<div class="container-fluid">
 <h1>HTML Editor</h1>
 <form class="form-group">
 
     <div class="form-group">
         <label for="widget-text">Text</label>
         <div ng-model="model.widget.text"
+             rows=20
              text-angular
              id="widget-text"
              ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
@@ -12,3 +14,6 @@
         </div>
     </div>
 </form>
+    <a class="btn btn-danger btn-block"
+       ng-click="model.deleteWidget()">Delete</a>
+</div>

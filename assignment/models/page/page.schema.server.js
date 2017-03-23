@@ -9,7 +9,7 @@ module.exports = function () {
         name: {type: String, required: true},
         title: String,
         description: String,
-        widgets: [WidgetSchema],
+        widgets: [{type: mongoose.Schema.Types.ObjectId, ref: 'assignment.widget'}],
         dateCreated: {type: Date, default: Date.now}
     }, {collection: "assignment.page"});
     

@@ -102,6 +102,7 @@ module.exports = function(app,models) {
     //                 res.sendStatus(400).send(error);
     //             });
     // }
+
     function deleteWebsite(req, res){
         var websiteId = req.params.websiteId;
         websiteModel
@@ -113,4 +114,25 @@ module.exports = function(app,models) {
             });
 
     }
+
+    // function deleteWebsite(req, res){
+    //     var websiteId = req.params.websiteId;
+    //     var userId = req.params.userId;
+    //     console.log("In del website");
+    //     console.log(userId);
+    //     userModel
+    //         .deleteWebsiteForUser(userId, websiteId)
+    //         .then(
+    //             function (response) {
+    //                 websiteModel
+    //                     .deleteWebsite(websiteId)
+    //                     .then(function (response) {
+    //                         res.send(200)
+    //                     }, function(err){
+    //                         res.status(400).send("Cannot delete Website");
+    //                     })
+    //             }
+    //         );
+    //
+    // }
 };

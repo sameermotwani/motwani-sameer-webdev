@@ -1,9 +1,9 @@
 module.exports = function () {
-    
+
     var mongoose = require('mongoose');
     var q = require('q');
     var UserSchema = require('./user.schema.server.js')();
-    var User = mongoose.model('User', UserSchema);
+        var User = mongoose.model('User', UserSchema);
 
     var api = {
         createUser: createUser,
@@ -12,7 +12,8 @@ module.exports = function () {
         findUserByUsername: findUserByUsername,
         updateUser: updateUser,
         deleteUser: deleteUser,
-        addWebsiteForUser: addWebsiteForUser
+        addWebsiteForUser: addWebsiteForUser,
+        //deleteWebsiteForUser:deleteWebsiteForUser
     };
     return api;
 
@@ -20,6 +21,18 @@ module.exports = function () {
     function createUser(user) {
         return User.create(user);
     }
+
+    // function deleteWebsiteForUser(userId, websiteId) {
+    //     console.log(userId);
+    //     return User
+    //         .findById(userId, function (err, user) {
+    //             console.log("HERE");
+    //             console.log(user.websites);
+    //             var index = user.websites.indexOf(websiteId);
+    //             user.websites.splice(index, 1);
+    //             user.save();
+    //         });
+    // }
 
     // Retrieves a user instance whose _id is equal to parameter userId
     function findUserById(userId) {
@@ -43,6 +56,8 @@ module.exports = function () {
                 user.save();
             });
     }
+
+
 
     function findUserByUsername(userName){
         var deferred = q.defer();

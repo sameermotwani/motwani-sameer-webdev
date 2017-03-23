@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <h1>Text Editor</h1>
 <form class="form-group">
     <label>Text</label>
@@ -9,3 +10,6 @@
     <label>Formatted</label>
     <input ng-model="model.widget.formatted" type="checkbox"/>
 </form>
+    <a class="btn btn-danger btn-block"
+       ng-click="model.deleteWidget()">Delete</a>
+</div>
