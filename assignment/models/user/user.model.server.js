@@ -59,20 +59,11 @@ module.exports = function () {
 
 
 
-    function findUserByUsername(userName){
-        var deferred = q.defer();
-        User.find(
-            {username: userName},
-            function(err,doc){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    deferred.resolve(doc);
-                }
-            }
-        );
-
-        return deferred.promise;
+    function findUserByUsername(username) {
+        console.log("************");
+        console.log(username);
+        return User
+            .findOne({username: username});
     }
 
     // Updates user instance whose _id is equal to parameter userId

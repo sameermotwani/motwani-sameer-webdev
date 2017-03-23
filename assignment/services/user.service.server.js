@@ -56,10 +56,11 @@ module.exports = function (app,models) {
     function findUserByUsername(req, res){
         var username = req.query.username;
         userModel
-            .findUserByUsername(username, res)
+            .findUserByUsername(username)
             .then(
                 function (user) {
-                    if (user = []) {
+                    if (user == []) {
+                        console.log(user);
                         res.status(500).send("User not found");
                     }
                     else {
@@ -71,6 +72,22 @@ module.exports = function (app,models) {
                 }
             );
     }
+
+    // function findUserByUsername(req, res) {
+    //     var username = req.query.username;
+    //     userModel
+    //         .findUserByUsername(username)
+    //         .then(
+    //             function (user) {
+    //                 if (user) {
+    //                     res.json(user);
+    //                 } else {
+    //                     res.sendStatus(500);
+    //                 }
+    //             }
+    //         );
+    // }
+
 
     function findUserByCredentials(req, res){
         var username = req.query.username;
