@@ -14,22 +14,32 @@
         init();
 
         function login(user) {
-            UserService
-                .login(user)
-                .success(function(user){
-                    if(user) {
-                        console.log("here");
-                        $rootScope.currentUser = user;
-                        $location.url("/user/"+user._id);
-                    } else {
-                        console.log("here2");
+            console.log("@@");
+            //console.log(username);
+            console.log("@@");
+            if(user)
+            {
+                UserService
+                    .login(user)
+                    .success(function (user) {
+                        if (user) {
+                            console.log("here");
+                            $rootScope.currentUser = user;
+                            $location.url("/user/" + user._id);
+                        } else {
+                            console.log("here2");
+                            vm.error = "User not found";
+                        }
+                    })
+                    .error(function (err) {
+                        // console.log("In .error")
                         vm.error = "User not found";
-                    }
-                })
-                .error(function(err){
-                    // console.log("In .error")
-                    vm.error = "User not found";
-                });
+                    });
+            }
+            else
+            {
+                vm.error = "Please enter the required fields";
+            }
         }
 
 
@@ -46,22 +56,26 @@
 
         function register(user) {
             if (user.password != user.verifypwd) {
-                $window.alert("two input password is not the same, Please check!");
+               // $window.alert("Passwords do not match");
+                vm.error = "Passwords do not match";
+
             }
-            UserService
-                .findUserByUsername(user.username)
-                .success(function(user){
-                    vm.message = "Username taken, please try another username";
-                })
-                .error(function (err) {
-                    console.log("Test");
-                    UserService
-                        .register(user)
-                        .success(function (newuser) {
-                            vm.message = "Username created succesfully"
-                            $location.url("/user/"+newuser._id);
-                        });
-                });
+            else {
+                UserService
+                    .findUserByUsername(user.username)
+                    .success(function (user) {
+                        vm.message = "Username taken, please try another username";
+                    })
+                    .error(function (err) {
+                        console.log("Test");
+                        UserService
+                            .register(user)
+                            .success(function (newuser) {
+                                vm.message = "Username created succesfully"
+                                $location.url("/user/" + newuser._id);
+                            });
+                    });
+            }
         }
     }
 

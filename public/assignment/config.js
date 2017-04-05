@@ -35,7 +35,17 @@
                 controllerAs: "model",
                 resolve: { loggedin: checkLoggedin }
 
+
             })
+            .when("/user", {
+                templateUrl: "user/templates/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: { loggedin: checkLoggedin }
+
+
+            })
+
             .when("/user/:uid/website", {
                 templateUrl: "website/templates/website-list.view.client.html",
                 controller: "WebsiteListController",

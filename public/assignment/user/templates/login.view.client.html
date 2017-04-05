@@ -1,26 +1,49 @@
 
-  <div class="container-fluid">
-    <h1>Login</h1>
+<div class="container-fluid">
+  <h1>Login</h1>
 
-    <div ng-show="model.error" class="alert alert-danger" role="alert">
-      {{model.error}}
+  <div ng-if="model.error"
+       class="alert alert-danger">
+        <span class="glyphicon glyphicon-exclamation-sign"
+              aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    {{model.error}}
+  </div>
+
+  <form method="POST" name="form" novalidate>
+    <div class="form-group">
+      <input ng-model="user.username"
+             name="userfield"
+             id="username"
+             autocomplete="off"
+             autocorrect="off"
+             autocapitalize="off"
+             class="form-control"
+             placeholder="username"
+             required/>
+
+      <span class="alert-danger" ng-show="form.userfield.$touched && form.userfield.$invalid">username is required.</span>
     </div>
 
-    <input ng-model="user.username"
-           id="username"
-           class="form-control"
-           placeholder="username"/>
+    <div class="form-group">
+      <input ng-model="user.password"
+             id="password"
+             name="passwordfield"
+             class="form-control"
+             type="password"
+             placeholder="password"
+             required/>
 
-    <input ng-model="user.password"
-           id="password"
-           class="form-control"
-           type="password"
-           placeholder="password"/>
+        <span class="alert-danger" ng-show="form.passwordfield.$touched && form.passwordfield.$invalid">password is required.</span>
 
+    </div>
+  <div>
     <a ng-click="model.login(user)" class="btn btn-primary btn-block">Login</a>
     <a href="#/register" class="btn btn-success btn-block">Register</a>
     <a href="/auth/facebook" class="btn btn-primary btn-block">
       <span class="fa fa-facebook"></span>
       Facebook
     </a>
+  </div>
+  </form>
 </div>

@@ -1,7 +1,7 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-
+var bcrypt = require("bcrypt-nodejs");
 
 
 module.exports = function (app,models) {
@@ -12,8 +12,8 @@ module.exports = function (app,models) {
     app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect: '/#/user',
-            failureRedirect: '/#/login'
+            successRedirect: '/assignment/#/user',
+            failureRedirect: '/assignment/#/login'
         }));
 
     app.get("/api/user", findUser);
@@ -55,15 +55,16 @@ module.exports = function (app,models) {
 
 
     function localStrategy(username, password, done) {
-        console.log(username);
+        console.log(password);
         console.log("In Local Strategy");
+        //password = bcrypt.hashSync(password);
         userModel
-            .findUserByCredentials(username, password)
+            .findUserByUsername(username)
             .then(
                 function(user) {
                     console.log("inside promise");
                     console.log(user);
-                    if(user && user.username === username && user.password === password) {
+                    if(user && bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
                     } else {
                         return done(null, false);
@@ -78,12 +79,44 @@ module.exports = function (app,models) {
     var userModel = models.userModel;
 
     function facebookStrategy(token, refreshToken, profile, done) {
+        console.log("Facebook Login");
+        console.log(profile);
         userModel
             .findUserByFacebookId(profile.id)
+            .then(
+                function (facebookUser) {
+                    if(facebookUser) {
+                        return done(null, facebookUser);
+                    } else {
+                        facebookUser = {
+                            username: profile.displayName.replace(/ /g, ''),
+                            facebook: {
+                                token: token,
+                                id: profile.id,
+                                displayName: profile.displayName
+                            }
+                        };
+                        userModel
+                            .createUser(facebookUser)
+                            .then(
+                                function (user) {
+                                    done(null, user);
+                                },
+                                function (error) {
+                                    done(error, null);
+                                }
+                            )
+                    }
+                },
+                function (error) {
+                    done(error, null);
+                }
+            );
     }
 
     function register (req, res) {
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
         userModel
             .createUser(user)
             .then(

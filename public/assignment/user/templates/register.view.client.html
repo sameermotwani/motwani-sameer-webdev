@@ -6,24 +6,47 @@
      {{model.message}}
     </div>
 
+    <div ng-if="model.error"
+         class="alert alert-danger">
+        <span class="glyphicon glyphicon-exclamation-sign"
+              aria-hidden="true"></span>
+     <span class="sr-only">Error:</span>
+     {{model.error}}
+    </div>
+
+    <form method="POST" name="form" novalidate>
     <input ng-model="user.username"
            id="username"
+           name="userfield"
            class="form-control"
-           placeholder="username"/>
+           placeholder="username"
+           required/>
 
-    <input ng-model="user.password"
+     <span class="alert-danger" ng-show="form.userfield.$touched && form.userfield.$invalid">username is required.</span>
+
+
+     <input ng-model="user.password"
            id="password"
            class="form-control"
            type="password"
-           placeholder="password"/>
+            name="passwordfield"
+           placeholder="password"
+           required/>
+
+     <span class="alert-danger" ng-show="form.passwordfield.$touched && form.passwordfield.$invalid">password is required.</span>
 		   
 	<input ng-model="user.verifypwd"
            id="verify-password"
            class="form-control"
+           name="verifypwdfield"
            type="password"
-           placeholder="verify password"/>
+           placeholder="verify password"
+           required/>
 
-    <a ng-click="model.register(user)"
+     <span class="alert-danger" ng-show="form.verifypwdfield.$touched && form.verifypwdfield.$invalid">Please re-enter the password again</span>
+
+     <a ng-click="model.register(user)"
        class="btn btn-primary btn-block">Register</a>
     <a href="#/login" class="btn btn-danger btn-block">Cancel</a>
+    </form>
 </div>
