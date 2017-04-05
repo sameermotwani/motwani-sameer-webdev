@@ -11,6 +11,7 @@ module.exports = function () {
         findUserByCredentials: findUserByCredentials,
         findUserByUsername: findUserByUsername,
         updateUser: updateUser,
+        findUserByFacebookId:findUserByFacebookId,
         deleteUser: deleteUser,
         addWebsiteForUser: addWebsiteForUser,
         //deleteWebsiteForUser:deleteWebsiteForUser
@@ -20,6 +21,9 @@ module.exports = function () {
     // Creates a new user instance
     function createUser(user) {
         return User.create(user);
+    }
+    function findUserByFacebookId(facebookId) {
+        return User.findOne({'facebook.id': facebookId});
     }
 
     // function deleteWebsiteForUser(userId, websiteId) {

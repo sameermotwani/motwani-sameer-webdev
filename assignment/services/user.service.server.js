@@ -1,5 +1,6 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 
 
@@ -8,6 +9,13 @@ module.exports = function (app,models) {
     app.post('/api/logout', logout);
     app.post ('/api/register', register);
     app.get ('/api/loggedin', loggedin);
+    app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/#/user',
+            failureRedirect: '/#/login'
+        }));
+
     app.get("/api/user", findUser);
     app.post("/api/user", createUser);
     app.get("/api/user/:userId", findUserById);
@@ -30,9 +38,21 @@ module.exports = function (app,models) {
         res.send(200);
     }
 
+
     passport.use(new LocalStrategy(localStrategy));
+
+    var facebookConfig = {
+        clientID     : process.env.FACEBOOK_CLIENT_ID || 107164386498119,
+        clientSecret : process.env.FACEBOOK_CLIENT_SECRET || "86679fe0745ec0d4015b567256dc8b56",
+        callbackURL  : process.env.FACEBOOK_CALLBACK_URL || "http://localhost:3000/auth/facebook/callback"
+    };
+
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
+
+
+
 
     function localStrategy(username, password, done) {
         console.log(username);
@@ -56,6 +76,11 @@ module.exports = function (app,models) {
     }
 
     var userModel = models.userModel;
+
+    function facebookStrategy(token, refreshToken, profile, done) {
+        userModel
+            .findUserByFacebookId(profile.id)
+    }
 
     function register (req, res) {
         var user = req.body;
