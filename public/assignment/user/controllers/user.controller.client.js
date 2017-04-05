@@ -4,7 +4,7 @@
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
-    function LoginController($location, $window, UserService) {
+    function LoginController($location,$rootScope, $window, UserService) {
         var vm = this;
         vm.login = login;
 
@@ -15,21 +15,24 @@
 
         function login(user) {
             UserService
-                .findUserByCredentials(user.username, user.password)
+                .login(user)
                 .success(function(user){
-                if(user) {
-                    console.log("here");
-                    $location.url("/user/"+user._id);
-                } else {
-                    console.log("here2");
-                    vm.error = "User not found";
-                }
-            })
+                    if(user) {
+                        console.log("here");
+                        $rootScope.currentUser = user;
+                        $location.url("/user/"+user._id);
+                    } else {
+                        console.log("here2");
+                        vm.error = "User not found";
+                    }
+                })
                 .error(function(err){
                     // console.log("In .error")
                     vm.error = "User not found";
                 });
         }
+
+
     }
 
     function RegisterController($location, $window, UserService) {
@@ -53,7 +56,7 @@
                 .error(function (err) {
                     console.log("Test");
                     UserService
-                        .createUser(user)
+                        .register(user)
                         .success(function (newuser) {
                             vm.message = "Username created succesfully"
                             $location.url("/user/"+newuser._id);
@@ -62,9 +65,10 @@
         }
     }
 
-    function ProfileController($routeParams, UserService) {
+    function ProfileController($routeParams,$location,$rootScope, UserService) {
         var vm = this;
         vm.updateUser = updateUser;
+        vm.logout=logout;
         vm.userId = $routeParams["uid"];
         console.log()
         function init() {
@@ -76,7 +80,17 @@
 
         init();
 
-        function updateUser(newUser) {
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function(response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/");
+                    })
+            }
+
+            function updateUser(newUser) {
             UserService
                 .updateUser(vm.userId, newUser)
                 .success(function (user) {
