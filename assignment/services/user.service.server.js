@@ -10,11 +10,12 @@ module.exports = function (app,models) {
     app.post ('/api/register', register);
     app.get ('/api/loggedin', loggedin);
     app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-    app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {
-            successRedirect: '/assignment/#/user',
-            failureRedirect: '/assignment/#/login'
-        }));
+    app.get('/auth/facebook/callback',passport.authenticate('facebook', {
+        failureRedirect: '/assignment/#/login'
+    }), function(req, res){
+        var url = '/assignment/#/user/' + req.user._id.toString();
+        res.redirect(url);
+    });
 
     app.get("/api/user", findUser);
     app.post("/api/user", createUser);
