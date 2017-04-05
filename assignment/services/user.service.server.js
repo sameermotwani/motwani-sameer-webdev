@@ -95,7 +95,8 @@ module.exports = function (app,models) {
                                 token: token,
                                 id: profile.id,
                                 displayName: profile.displayName
-                            }
+                            },
+                            email: profile.emails[0].value
                         };
                         userModel
                             .createUser(facebookUser)
